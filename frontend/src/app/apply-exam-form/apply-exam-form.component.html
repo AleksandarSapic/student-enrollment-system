@@ -1,0 +1,28 @@
+<div class="overlay">
+  <div class="box is-centered">
+    <div class="columns is-multiline">
+      <div class="column is-full is-flex is-align-items-center">
+        <div class="is-flex-grow-1 is-flex is-justify-content-center">
+          <h2 class="title">Prijava</h2>
+        </div>
+        <button class="delete is-medium" aria-label="close" (click)="closeDialog()"></button>
+      </div>
+      <div class="column is-half">
+        <h2 class="subtitle"> {{ event().examEventName }} </h2>
+        <p class="my-1"><strong>Oblast:</strong> {{ event().typeName }}</p>
+        <p class="my-1"><strong>Datum održavanja:</strong> {{ event().maintenanceDate }}</p>
+        <p class="my-1"><strong>Početak prijave:</strong> {{ event().applicationDateRange.startDate }}</p>
+        <p class="my-1"><strong>Kraj prijave:</strong> {{ event().applicationDateRange.endDate }}</p>
+        <p class="my-1"><strong>Cena prijave:</strong> {{ event().price }} RSD</p>
+      </div>
+      <div class="column is-half">
+        <h2 class="subtitle">Kandidat</h2>
+        <p><strong>Ime:</strong> {{ getFullName() }}</p>
+        <p><strong>Email:</strong> {{ user?.email }}</p>
+      </div>
+      <div class="column is-full is-flex is-justify-content-center">
+        <button class="button is-primary my-3" style="width: 50%;" (click)="applyForExam()">Prijavi se</button>
+      </div>
+    </div>
+  </div>
+</div>
