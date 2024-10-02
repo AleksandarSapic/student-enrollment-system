@@ -1,0 +1,12 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title">Profil Korisnika</h1>
+
+    <div class="box">
+      <h2 class="subtitle">Detalji o korisniku</h2>
+      <p><strong>Ime:</strong> {{ getFullName() }}</p>
+      <p><strong>Email:</strong> {{ user().email }}</p>
+      <p><strong>Ukupna cena prijava:</strong> {{ user().price }} RSD</p>
+    </div>
+  </div>
+</section>

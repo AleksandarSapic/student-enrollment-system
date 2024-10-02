@@ -1,0 +1,22 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title">Moje Prijave</h1>
+
+    <div class="columns is-multiline">
+      @for (application of applications(); track application.applicationNumber) {
+        <div class="column is-one-third">
+          <div class="box">
+            <h2 class="subtitle">{{ application.examEvent.examEventName }}</h2>
+            <p><strong>Oblast:</strong> {{ application.examEvent.typeName }}</p>
+            <p><strong>Datum održavanja:</strong> {{ application.examEvent.maintenanceDate }}</p>
+            <p><strong>Broj prijave:</strong> {{ application.applicationNumber }}</p>
+          </div>
+        </div>
+      } @empty {
+        <div class="notification is-warning">
+          <strong>Nemate nijednu prijavu.</strong>
+        </div>
+      }
+    </div>
+  </div>
+</section>
