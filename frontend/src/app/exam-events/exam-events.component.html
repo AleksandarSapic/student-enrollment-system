@@ -1,0 +1,28 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title">Termini probnih prijemnih ispita</h1>
+
+    <div class="columns">
+      @for (event of examEvents; track event.id) {
+        <div class="column is-one-third">
+          <div class="box">
+            <h2 class="subtitle">{{ event.examEventName }}</h2>
+            <p class="my-1"><strong>Oblast:</strong> {{ event.typeName }}</p>
+            <p class="my-1"><strong>Datum održavanja:</strong> {{ event.maintenanceDate }}</p>
+            <p class="my-1"><strong>Početak prijave:</strong> {{ event.applicationDateRange.startDate }}</p>
+            <p class="my-1"><strong>Kraj prijave:</strong> {{ event.applicationDateRange.endDate }}</p>
+            <button class="button is-primary my-3" (click)="selectEvent(event)">Prijavi se</button>
+          </div>
+        </div>
+      } @empty {
+        <div class="notification is-warning">
+          <strong>Trenutno nema dostupnih termina.</strong>
+          <p>Molimo da proverite kasnije za nadolazeće događaje.</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+@if (selectedEvent) {
+  <app-apply-exam-form [event]="selectedEvent" (close)="resetSelectedEvent()"></app-apply-exam-form>
+}
