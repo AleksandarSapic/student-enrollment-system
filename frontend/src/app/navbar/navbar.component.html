@@ -1,0 +1,46 @@
+<nav class="navbar my-4 header-border">
+  <div class="navbar-brand px-6">
+    <a routerLink="/">
+      <img ngSrc="/assets/logo.svg" alt="Logo" class="image" height="75" width="75" priority/>
+    </a>
+  </div>
+  <div class="navbar-menu flex-container-col">
+    <div class="navbar-start flex-container-col">
+      <a class="navbar-item icon-text" routerLink="/" routerLinkActive="is-selected has-text-light"
+         ariaCurrentWhenActive="page"
+         [routerLinkActiveOptions]="{ exact: true }">
+        <fa-icon [icon]="faHome"></fa-icon>
+        Početna
+      </a>
+      <a class="navbar-item" routerLink="/events" routerLinkActive="is-selected has-text-light"
+         ariaCurrentWhenActive="page">
+        <fa-icon [icon]="faFile"></fa-icon>
+        Termini
+      </a>
+      <a class="navbar-item" routerLink="/admin/dashboard" routerLinkActive="is-selected has-text-light">
+        <fa-icon [icon]="faDashboard"></fa-icon>
+        Admin dashboard
+      </a>
+    </div>
+    <div class="navbar-end navbar-item has-dropdown is-hoverable mx-6">
+      <a class="navbar-link">
+        <fa-icon [icon]="faUser"></fa-icon>
+        Aleksandar Šapić
+      </a>
+      <div class="navbar-dropdown">
+        <a class="navbar-item" routerLink="/profile" routerLinkActive="is-selected has-text-light"
+           ariaCurrentWhenActive="page">
+          Profil
+        </a>
+        <a class="navbar-item" routerLink="/admin/profile" routerLinkActive="is-selected has-text-light">
+          Admin profil
+        </a>
+        <hr class="navbar-divider"/>
+        <a class="navbar-item">
+          <fa-icon [icon]="faSignOut"></fa-icon>
+          Odjavi se
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
