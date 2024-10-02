@@ -1,0 +1,217 @@
+@if (examEventTypes) {
+  <div class="overlay">
+    <div class="box is-centered">
+      <form #createEventForm="ngForm" class="columns is-multiline" (ngSubmit)="onSubmit(createEventForm)">
+        <div class="column is-full is-flex is-align-items-center">
+          <div class="is-flex-grow-1 is-flex is-justify-content-center">
+            <h2 class="title">Kreiraj termin probnog prijemnog ispita</h2>
+          </div>
+          <button class="delete is-medium" aria-label="close" type="button" (click)="closeDialog()"></button>
+        </div>
+
+        <!-- Naziv input -->
+        <div class="column field">
+          <label class="label">Naziv:</label>
+          <div class="control has-icons-right">
+            <input class="input"
+                   [ngClass]="{'is-danger': naziv.invalid && naziv.touched, 'is-success': naziv.valid && naziv.touched}"
+                   type="text"
+                   name="naziv"
+                   placeholder="Unesite naziv"
+                   autocomplete="off"
+                   minlength="2"
+                   required
+                   [(ngModel)]="formData.naziv"
+                   #naziv="ngModel"
+            />
+            @if (naziv.touched) {
+              <span class="icon is-small is-right">
+                @if (naziv.valid) {
+                  <fa-icon [icon]="faCheck"/>
+                } @else {
+                  <fa-icon [icon]="faExclamationTriangle"/>
+                }
+                </span>
+            }
+          </div>
+          @if (naziv.invalid && naziv.touched) {
+            <p class="help is-danger">
+              Naziv je obavezan i mora imati najmanje 2 karaktera.
+            </p>
+          }
+        </div>
+
+        <!-- Oblast dropdown -->
+        <div class="column field">
+          <label class="label">Oblast:</label>
+          @if (examEventTypes.length > 0) {
+            <div class="select is-fullwidth"
+                 [ngClass]="{'is-danger': oblast.invalid && oblast.touched, 'is-success ': oblast.valid && oblast.touched}">
+              <select name="oblast" required ngModel #oblast="ngModel">
+                <option value="" disabled selected>Izaberite oblast</option>
+                @for (eventType of examEventTypes; track eventType.id) {
+                  <option [value]="eventType.id">
+                    {{ eventType.name }}
+                  </option>
+                }
+              </select>
+              @if (oblast.invalid && oblast.touched) {
+                <p class="help is-danger">Oblast je obavezna.</p>
+              }
+            </div>
+          } @else {
+            <div class="select is-danger">
+              <select name="error" disabled>
+                <option value="" selected>
+                  Trenutno ne postoji ni jedna oblast.
+                </option>
+              </select>
+            </div>
+          }
+        </div>
+
+        <!-- Datum održavanja -->
+        <div class="column field is-full">
+          <label class="label">Datum održavanja:</label>
+          <div class="control has-icons-right">
+            <input class="input"
+                   [ngClass]="{'is-danger': datumOdrzavanja.invalid && datumOdrzavanja.touched,
+                   'is-success': datumOdrzavanja.valid && datumOdrzavanja.touched}"
+                   type="date"
+                   name="datumOdrzavanja"
+                   [min]="currentDate"
+                   required
+                   [(ngModel)]="formData.datumOdrzavanja"
+                   (ngModelChange)="updateMinDates()"
+                   #datumOdrzavanja="ngModel"
+            />
+            @if (datumOdrzavanja.touched) {
+              <span class="icon is-small is-right">
+                @if (datumOdrzavanja.valid) {
+                  <fa-icon [icon]="faCheck"/>
+                } @else {
+                  <fa-icon [icon]="faExclamationTriangle"/>
+                }
+                </span>
+            }
+          </div>
+          @if (datumOdrzavanja.invalid && datumOdrzavanja.touched) {
+            <p class="help is-danger">
+              Datum održavanja je obavezan.
+            </p>
+          }
+        </div>
+
+        <!-- Početak prijave -->
+        <div class="column field is-full">
+          <label class="label">Početak prijave:</label>
+          <div class="control has-icons-right">
+            <input class="input"
+                   [ngClass]="{'is-danger': pocetakPrijave.invalid && pocetakPrijave.touched,
+                   'is-success': pocetakPrijave.valid && pocetakPrijave.touched}"
+                   type="date"
+                   name="pocetakPrijave"
+                   [min]="minPocetakPrijave"
+                   required
+                   [(ngModel)]="formData.pocetakPrijave"
+                   (ngModelChange)="updateMinKrajPrijave()"
+                   #pocetakPrijave="ngModel"
+            />
+            @if (pocetakPrijave.touched) {
+              <span class="icon is-small is-right">
+                @if (pocetakPrijave.valid) {
+                  <fa-icon [icon]="faCheck"/>
+                } @else {
+                  <fa-icon [icon]="faExclamationTriangle"/>
+                }
+                </span>
+            }
+          </div>
+          @if (pocetakPrijave.invalid && pocetakPrijave.touched) {
+            <p class="help is-danger">
+              Početak prijave je obavezan i mora biti posle datuma održavanja.
+            </p>
+          }
+        </div>
+
+        <!-- Kraj prijave -->
+        <div class="column field is-full">
+          <label class="label">Kraj prijave:</label>
+          <div class="control has-icons-right">
+            <input class="input"
+                   [ngClass]="{'is-danger': krajPrijave.invalid && krajPrijave.touched,
+                   'is-success': krajPrijave.valid && krajPrijave.touched}"
+                   type="date"
+                   name="krajPrijave"
+                   [min]="minKrajPrijave"
+                   required
+                   [(ngModel)]="formData.krajPrijave"
+                   #krajPrijave="ngModel"
+            />
+            @if (krajPrijave.touched) {
+              <span class="icon is-small is-right">
+                @if (krajPrijave.valid) {
+                  <fa-icon [icon]="faCheck"/>
+                } @else {
+                  <fa-icon [icon]="faExclamationTriangle"/>
+                }
+                </span>
+            }
+          </div>
+          @if (krajPrijave.invalid && krajPrijave.touched) {
+            <p class="help is-danger">
+              Kraj prijave je obavezan i mora biti posle početka prijave.
+            </p>
+          }
+        </div>
+
+        <!-- Cena prijave -->
+        <div class="column field is-full">
+          <label class="label">Cena prijave:</label>
+          <div class="control has-icons-right">
+            <input class="input"
+                   [ngClass]="{'is-danger': cenaPrijave.invalid && cenaPrijave.touched,
+                   'is-success': cenaPrijave.valid && cenaPrijave.touched}"
+                   type="number" name="cenaPrijave" min="0" required
+                   ngModel #cenaPrijave="ngModel"/>
+            @if (cenaPrijave.touched) {
+              <span class="icon is-small is-right">
+                @if (cenaPrijave.valid) {
+                  <fa-icon [icon]="faCheck"/>
+                } @else {
+                  <fa-icon [icon]="faExclamationTriangle"/>
+                }
+                </span>
+            }
+          </div>
+          @if (cenaPrijave.invalid && cenaPrijave.touched) {
+            <p class="help is-danger">
+              Cena mora biti jednaka ili veća od 0.
+            </p>
+          }
+        </div>
+
+        <!-- Submit button -->
+        <div class="column is-full is-flex is-justify-content-center">
+          <button
+            class="button is-primary my-3"
+            type="submit"
+            [disabled]="createEventForm.invalid"
+            style="width: 50%;"
+          >
+            Kreiraj termin
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+} @else {
+  <section class="section">
+    <div class="container">
+      <div class="notification is-danger">
+        <strong>Greška prilikom dohvatanja exam event types.</strong>
+        <p>Nije implementirano.</p>
+      </div>
+    </div>
+  </section>
+}
