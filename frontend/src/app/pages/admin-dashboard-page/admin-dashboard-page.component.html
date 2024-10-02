@@ -1,0 +1,14 @@
+@if (isModalOpen) {
+  <app-create-event-modal (close)="closeModal()"/>
+}
+<main>
+  <app-admin-exam-event-cards/>
+  <section class="section">
+    <div class="container">
+      <button class="button is-text is-large" (click)="openModal()">
+        <fa-icon class="pr-3" [icon]="faPlusCircle"></fa-icon>
+        <p class="title is-4">Kreiraj novi termin</p>
+      </button>
+    </div>
+  </section>
+</main>

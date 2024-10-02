@@ -1,0 +1,15 @@
+<main>
+  @if (user) {
+    <app-user-profile [user]="user"/>
+    <app-user-application-forms [applications]="user.applicationForms"/>
+  } @else {
+    <section class="section">
+      <div class="container">
+        <div class="notification is-warning">
+          <strong>Podaci nisu dostupni.</strong>
+          <p>Molimo da proverite kasnije.</p>
+        </div>
+      </div>
+    </section>
+  }
+</main>

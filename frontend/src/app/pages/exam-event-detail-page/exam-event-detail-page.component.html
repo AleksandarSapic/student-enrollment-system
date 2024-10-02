@@ -1,0 +1,53 @@
+<div class="container">
+  @if (eventNotFound) {
+    <div class="notification has-text-danger has-text-centered">
+      <h1 class="title my-3">400 - Termin nije pronađen</h1>
+      <p class="subtitle my-3">Termin probnog prijemnog ispita kom ste pokušali da pristupite ne postoji. Molimo vas da
+        proverite URL ili pokušate ponovo kasnije.</p>
+      <a class="button is-link is-outlined is-medium mx-2" routerLink="/">Home</a>
+    </div>
+  } @else {
+    @if (examEvent) {
+      <div class="box">
+        <h1 class="title">{{ examEvent.examEventName }}</h1>
+
+        <div class="content mx-6">
+          <p><strong>Oblast:</strong> {{ examEvent.typeName }}</p>
+          <p><strong>Datum održavanja:</strong> {{ examEvent.maintenanceDate }}</p>
+          <p><strong>Početak prijave:</strong> {{ examEvent.applicationDateRange.startDate }} </p>
+          <p><strong>Kraj prijave:</strong> {{ examEvent.applicationDateRange.endDate }} </p>
+          <p><strong>Cena prijave:</strong> {{ examEvent.price }} RSD</p>
+          <p><strong>Broj prijavljenih kandidata:</strong> {{ examEvent.numberOfApplicants }}</p>
+        </div>
+
+        <hr>
+
+        <h2 class="subtitle">Lista prijavljenih kandidata</h2>
+        @for (application of examEvent.applicationForms; track application.applicationNumber) {
+          <li class="box is-flex is-align-items-center is-justify-content-space-between mx-6">
+            <div>
+              <p>
+                <strong>Kandidat:</strong>
+                {{ application.user.firstName }} ({{ application.user.middleName }}) {{ application.user.lastName }}
+              </p>
+              <p><strong>Broj prijave:</strong> {{ application.applicationNumber }}</p>
+            </div>
+            <a class="button is-link is-outlined" [href]="'/users/' + application.user.id">Detalji</a>
+          </li>
+        } @empty {
+          <div class="notification is-warning">
+            <strong>Trenutno nema prijavljenih kandidata za ovaj termin.</strong>
+            <p>Molimo da proverite kasnije.</p>
+          </div>
+        }
+      </div>
+    } @else {
+      <section class="section">
+        <div class="notification is-warning">
+          <strong>Podaci nisu dostupni.</strong>
+          <p>Molimo da proverite kasnije.</p>
+        </div>
+      </section>
+    }
+  }
+</div>
