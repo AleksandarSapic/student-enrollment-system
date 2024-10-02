@@ -1,0 +1,15 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title">Obaveštenja</h1>
+
+    @for (notification of notifications; track notification.message) {
+      <div class="notification {{ notification.type }}">
+        {{ notification.message }}
+      </div>
+    } @empty {
+      <div class="notification is-light">
+        <strong>Trenutno nemate novih obaveštenja.</strong>
+      </div>
+    }
+  </div>
+</section>
